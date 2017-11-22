@@ -1,0 +1,6 @@
+*.pyc
+.ropeproject
+.gitignore
+**/venv
+**/__pycache__*
+**/env*
