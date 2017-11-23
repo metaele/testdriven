@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+
+  users:
+    container_name: users_service
+    build: .
+    image: users_img
+    volumes:
+      - ".:/usr/src/app" # HOST:CONTAINER dir map mounting
+    ports:
+      - 5500:5000
+    environment:
+      - APP_SETTINGS=app.config.DevelopmentConfig
+        
