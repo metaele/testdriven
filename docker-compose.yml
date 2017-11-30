@@ -2,6 +2,16 @@ version: '2.1'
 
 services:
 
+  users_db:
+    container_name: usersdb
+    image: users_db_img
+    build: ./app/db
+    ports:
+      - 5435:5432
+    env_file: db_cred.env
+    healthcheck:
+      test: exit 0
+
   users:
     container_name: users_service
     build: .
@@ -10,6 +20,12 @@ services:
       - ".:/usr/src/app" # HOST:CONTAINER dir map mounting
     ports:
       - 5500:5000
-    environment:
-      - APP_SETTINGS=app.config.DevelopmentConfig
+    env_file: 
+      - web.env
+      - db.env
+    depends_on:
+      users_db:
+        condition: service_healthy
+    links:
+      - users_db
         
