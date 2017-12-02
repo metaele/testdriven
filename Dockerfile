@@ -10,11 +10,13 @@ RUN apk add --update --no-cache \
     postgresql-client \
     postgresql-dev \
     libpq \
+    libffi-dev \
     gcc \
     python3-dev \
     musl-dev && \
     pip3 install --no-cache-dir -r requirements.txt && \
-    apk del -r python3-dev postgresql-client postgresql-dev gcc musl-dev
+    apk del -r python3-dev postgresql-client postgresql-dev gcc musl-dev \ 
+    libffi-dev
 
 ADD . /usr/src/app/
 

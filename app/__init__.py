@@ -1,5 +1,6 @@
 import os
 import datetime
+import unittest
 
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -17,6 +18,17 @@ def recreate_db():
     db.drop_all()
     db.create_all()
     db.session.commit()
+
+
+@app.cli.command()
+def test():
+    '''runs test - currently without coverage'''
+    tests = unittest.TestLoader().discover('app/tests', pattern='test*.py')
+    tests_result = unittest.TextTestRunner(verbosity=2).run(tests)
+    if tests_result.wasSuccessful():
+        return 0
+    return 1
+
 
 
 class User(db.Model):
