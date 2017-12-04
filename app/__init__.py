@@ -23,11 +23,8 @@ def recreate_db():
 @app.cli.command()
 def test():
     '''runs test - currently without coverage'''
-    tests = unittest.TestLoader().discover('app/tests', pattern='test*.py')
-    tests_result = unittest.TextTestRunner(verbosity=2).run(tests)
-    if tests_result.wasSuccessful():
-        return 0
-    return 1
+    import pytest
+    pytest.main(['-v'])
 
 
 

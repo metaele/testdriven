@@ -1,15 +1,14 @@
 import json
+import pytest
 
-from app.tests.base import BaseTestCase
 
-
-class TestUserService(BaseTestCase):
+class TestUserService:
     '''User service tests'''
 
-    def test_users(self):
+    def test_users(self, http_test_client):
         '''test the /ping endpoint'''
-        resp = self.client.get('/ping')
+        resp = http_test_client.get('/ping')
         data = json.loads(resp.data.decode())
-        self.assertEquals(resp.status_code, 200)
-        self.assertIn('pong', data['message'])
-        self.assertIn('success', data['status'])
+        assert resp.status_code == 200
+        assert 'pong' in data['message']
+        assert 'success' in data['status']
