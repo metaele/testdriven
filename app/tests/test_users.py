@@ -3,11 +3,10 @@ import pytest
 
 
 class TestUserService:
-    '''User service tests'''
 
-    def test_users(self, http_test_client):
+    def test_users(self, testapp_client):
         '''test the /ping endpoint'''
-        resp = http_test_client.get('/ping')
+        resp = testapp_client.get('/ping')
         data = json.loads(resp.data.decode())
         assert resp.status_code == 200
         assert 'pong' in data['message']

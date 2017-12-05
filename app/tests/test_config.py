@@ -1,19 +1,14 @@
 import pytest
 from flask import current_app
 
-from app import app
+from app import create_app
 
 db_url = "postgres://postgres:postgres@users_db:5432/{}".format
 cfg = "app.config.{}Config".format
 
 
-def dev_app(config):
-    app.config.from_object(config)
-    return app
-
-
 def test_app_is_development():
-    app_tested = dev_app(cfg('Development'))
+    app_tested = create_app(cfg('Development'))
     assert app_tested.config['SECRET_KEY'] == 'my_secret'
     assert app_tested.config['DEBUG']
     assert current_app
@@ -21,7 +16,7 @@ def test_app_is_development():
 
 
 def test_app_is_testing():
-    test_app = dev_app(cfg('Testing'))
+    test_app = create_app(cfg('Testing'))
     assert test_app.config['SECRET_KEY'] == 'my_secret'
     assert test_app.config['DEBUG']
     assert test_app.config['TESTING']
@@ -30,7 +25,7 @@ def test_app_is_testing():
 
 
 def test_app_is_production():
-    test_app = dev_app(cfg('Production'))
+    test_app = create_app(cfg('Production'))
     assert test_app.config['SECRET_KEY'] == 'my_secret'
     assert not test_app.config['DEBUG']
     assert not test_app.config['TESTING']

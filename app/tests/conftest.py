@@ -1,6 +1,6 @@
 import pytest
 
-from app import app, db
+from app import create_app, db
 from app.config import TestingConfig
 
 #==================================
@@ -9,15 +9,14 @@ from app.config import TestingConfig
 
 @pytest.fixture(scope='session')
 def testapp():
-    app.config.from_object(TestingConfig) # set config to point to testing
-    return app
+    return create_app(TestingConfig) # set config to point to testing
 
 
 #===========================================
 # The fixture http client to access test app
 #===========================================
 @pytest.fixture(scope='session')
-def http_test_client(testapp):
+def testapp_client(testapp):
     return testapp.test_client()
 
 
