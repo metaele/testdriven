@@ -1,4 +1,5 @@
-from . import create_app
+from . import create_app, db
+from .api.models import User
 
 
 app = create_app()
@@ -12,8 +13,15 @@ def recreate_db():
 
 
 @app.cli.command()
+def seed_db():
+    db.session.add(User('twicet', 'mrtwice@clearstride.io'))
+    db.session.add(User('gofha', 'gofha@got.io'))
+    db.session.commit()
+
+
+@app.cli.command()
 def test():
     '''runs test - currently without coverage'''
     import pytest
-    pytest.main(['-v'])
+    pytest.main(['-s' , '-v', 'app/tests'])
 
