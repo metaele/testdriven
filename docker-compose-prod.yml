@@ -1,10 +1,10 @@
+
 version: '2.1'
 
 services:
 
   users_db:
     container_name: usersdb
-    image: users_db_img
     build: ./app/db
     ports:
       - 5435:5432
@@ -15,19 +15,17 @@ services:
   users:
     container_name: users_service
     build: .
-    image: users_img
-    volumes:
-      - ".:/usr/src/app" # HOST:CONTAINER dir map mounting
     ports:
-      - 5500:5000
+      - 5000
     env_file: 
-      - web.env
-      - db.env
+      - web_prod.env
+      - db_prod.env
     depends_on:
       users_db:
         condition: service_healthy
     links:
       - users_db
+    command: gunicorn -b 0.0.0.0:5000 app.main:app
 
   nginx:
     container_name: nginx
