@@ -1,11 +1,22 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
 from sqlalchemy.exc import IntegrityError
 
 from app import db
 from app.api.models import User
 
 
-user_routes = Blueprint('users', __name__)
+user_routes = Blueprint('users', __name__, template_folder='./templates')
+
+
+@user_routes.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        db.session.add(User(username, email))
+        db.session.commit()
+    users = User.query.order_by(User.created_at.desc()).all()
+    return render_template('index.html', users=users)
 
 
 @user_routes.route('/users', methods=['POST'])

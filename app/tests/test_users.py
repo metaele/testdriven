@@ -104,6 +104,36 @@ class TestUserService:
             assert 'gofha@got.io' in data['data']['users'][1]['email']
             assert 'success' in data['status']
 
+    def test_main_no_users(self, app):
+        with app.test_client() as client:
+            response = client.get('/')
+            assert response.status_code == 200
+            assert b'<h1>All Users</h1>' in response.data
+            assert b'<p>No users!</p>' in response.data
+
+    def test_main_with_users(self, app):
+        add_user('mrtwice', 'mrtwice@clearstride.io')
+        add_user('giovanni', 'giovanni@nobilitia.plus')
+        with app.test_client() as client:
+            response = client.get('/')
+            assert response.status_code == 200
+            assert b'<p>No users!</p>' not in response.data
+            assert b'<strong>mrtwice</strong>' in response.data
+            assert b'<strong>giovanni</strong>' in response.data
+            #assert b'<h1>All Users</h1>' not in response.data
+
+    def test_main_add_user(self, app):
+        with app.test_client() as client:
+            response = client.post(
+                '/',
+                data={'username': 'mrtwo', 'email': 'twotwo@email.com'},
+                follow_redirects=True
+            )
+            assert response.status_code == 200
+            assert b'<h1>All Users</h1>' in response.data
+            assert b'<p>No users!</p>' not in response.data
+            assert b'<strong>mrtwo</strong>' in response.data
+
 
 class Post:
     def __init__(self, client, url, data, content_type='application/json'):
