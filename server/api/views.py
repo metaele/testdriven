@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request, render_template
 from sqlalchemy.exc import IntegrityError
 
-from app import db
-from app.api.models import User
+from server import db
+from server.api.models import User
 
 
 user_routes = Blueprint('users', __name__, template_folder='./templates')

@@ -5,7 +5,7 @@ services:
 
   users_db:
     container_name: usersdb
-    build: ./app/db
+    build: ./server/db
     ports:
       - 5435:5432
     env_file: db_cred.env
@@ -25,7 +25,7 @@ services:
         condition: service_healthy
     links:
       - users_db
-    command: gunicorn -b 0.0.0.0:5000 app.main:app
+    command: gunicorn -b 0.0.0.0:5000 server.main:app
 
   nginx:
     container_name: nginx

@@ -23,5 +23,5 @@ def seed_db():
 def test():
     '''runs test - currently without coverage'''
     import pytest
-    pytest.main(['-s' , '-v', 'app/tests'])
+    pytest.main(['-s' , '-v', 'server/tests'])
 

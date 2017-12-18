@@ -1,10 +1,10 @@
 import pytest
 from flask import current_app
 
-from app import create_app
+from server import create_app
 
 db_url = "postgres://postgres:postgres@users_db:5432/{}".format
-cfg = "app.config.{}Config".format
+cfg = "server.config.{}Config".format
 
 
 def test_app_is_development():

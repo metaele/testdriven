@@ -5,7 +5,7 @@ services:
   users_db:
     container_name: usersdb
     image: users_db_img
-    build: ./app/db
+    build: ./server/db
     ports:
       - 5435:5432
     env_file: db_cred.env

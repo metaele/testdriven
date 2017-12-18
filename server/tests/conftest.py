@@ -1,6 +1,6 @@
 import pytest
 
-from app import create_app, db
+from server import create_app, db
 
 #==================================
 # Base fixtures to create a test app
@@ -8,7 +8,7 @@ from app import create_app, db
 
 @pytest.fixture(scope='session')
 def testapp():
-    return create_app('app.config.TestingConfig') # set config to point to testing
+    return create_app('server.config.TestingConfig') # set config to point to testing
 
 
 @pytest.fixture()
