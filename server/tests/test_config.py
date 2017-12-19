@@ -1,3 +1,5 @@
+import os
+
 import pytest
 from flask import current_app
 
@@ -12,7 +14,7 @@ def test_app_is_development():
     assert app_tested.config['SECRET_KEY'] == 'my_secret'
     assert app_tested.config['DEBUG']
     assert current_app
-    assert app_tested.config['SQLALCHEMY_DATABASE_URI'] == db_url('users_dev')
+    assert app_tested.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_DEV_URL')
 
 
 def test_app_is_testing():
@@ -21,7 +23,7 @@ def test_app_is_testing():
     assert test_app.config['DEBUG']
     assert test_app.config['TESTING']
     assert not test_app.config['PRESERVE_CONTEXT_ON_EXCEPTION']
-    assert test_app.config['SQLALCHEMY_DATABASE_URI'] == db_url('users_test')
+    assert test_app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_TEST_URL')
 
 
 def test_app_is_production():

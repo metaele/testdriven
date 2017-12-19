@@ -25,3 +25,10 @@ def test():
     import pytest
     pytest.main(['-s' , '-v', 'server/tests'])
 
+
+@app.cli.command()
+def coverage():
+    '''test coverage - settings under .coveragerc'''
+    import pytest
+    opts = ['--cov-report=term-missing', '--cov=server', '--cov-config=.coveragerc']
+    pytest.main(opts)

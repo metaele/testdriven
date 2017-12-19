@@ -1,5 +1,7 @@
 .ropeproject
 venv/
+coverage/
+.coverage
 *.pyc
 __pycache__
 env
