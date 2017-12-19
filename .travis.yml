@@ -10,8 +10,10 @@ install:
   - pip install -r requirements.txt
 
 before_script:
+  - export FLASK_APP=server/main.py
   - export APP_SETTINGS="project.config.TestingConfig"
   - export DATABASE_TEST_URL=postgresql://postgres:@localhost/users_test
+  - export DATABASE_DEV_URL=postgres://postgres:@localhost/users_dev
   - psql -c 'create database users_test;' -U postgres
   - flask recreate_db
 
